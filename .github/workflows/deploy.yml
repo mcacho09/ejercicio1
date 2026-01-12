@@ -16,16 +16,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }} # ensures you get the PR branch
-          path: ./terraform # optional: specify directory
+          path: infra # optional: specify directory
           submodules: true # if configs are in submodules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Verify files in dir
-        run: ls -R terraform
+        working-directory: infra/terraform
+        run: ls -R ./terraform
 
       - name: Terraform Init
+        working-directory: infra/terraform
         run: terraform init
 
   terraform-plan:
@@ -36,13 +38,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }} # ensures you get the PR branch
-          path: ./terraform # optional: specify directory
+          path: infra # optional: specify directory
           submodules: true # if configs are in submodules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Plan
+        working-directory: infra/terraform
         run: terraform plan
 
   terraform-apply:
@@ -60,6 +63,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Apply
+        working-directory: infra/terraform
         run: terraform apply -auto-approve
 
   build-and-deploy:
