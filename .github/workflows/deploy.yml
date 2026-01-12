@@ -28,7 +28,7 @@ jobs:
 
       - name: Terraform Init
         working-directory: infra/terraform
-        run: terraform init
+        run: terraform init -upgrade
 
   terraform-plan:
     runs-on: ubuntu-latest
