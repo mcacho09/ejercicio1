@@ -24,7 +24,7 @@ jobs:
 
       - name: Verify files in dir
         working-directory: infra/terraform
-        run: ls -R ./terraform
+        run: ls -R
 
       - name: Terraform Init
         working-directory: infra/terraform
