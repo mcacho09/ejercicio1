@@ -14,9 +14,16 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # ensures you get the PR branch
+          path: terraform # optional: specify directory
+          submodules: true # if configs are in submodules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+
+      - name: Verify files
+        run: ls -R terraform
 
       - name: Terraform Init
         run: terraform init
@@ -27,6 +34,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # ensures you get the PR branch
+          path: terraform # optional: specify directory
+          submodules: true # if configs are in submodules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -40,6 +51,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # ensures you get the PR branch
+          path: terraform # optional: specify directory
+          submodules: true # if configs are in submodules
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
