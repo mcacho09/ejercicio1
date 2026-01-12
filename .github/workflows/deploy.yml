@@ -30,7 +30,7 @@ jobs:
         working-directory: infra/terraform
         run: terraform init -upgrade
 
-      - name: Terraform Plan
+      - name: Terraform Plan using terraform init -upgrade
         working-directory: infra/terraform
         run: terraform plan
 
