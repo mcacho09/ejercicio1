@@ -62,6 +62,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
+      - name: Terraform Init
+        working-directory: infra/terraform
+        run: terraform init -upgrade
+
       - name: Terraform Apply
         working-directory: infra/terraform
         run: terraform apply -auto-approve
