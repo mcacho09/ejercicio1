@@ -38,6 +38,7 @@ jobs:
         run: terraform plan -no-color -out=tfplan > plan.txt
 
       - name: Check if plan has changes
+        working-directory: infra/terraform
         id: changes
         run: |
           terraform show -no-color tfplan > plan.out
@@ -48,6 +49,7 @@ jobs:
           fi
 
       - name: Apply only if changes
+        working-directory: infra/terraform
         if: steps.changes.outputs.changed == 'true'
         run: terraform apply tfplan -auto-approve
 
