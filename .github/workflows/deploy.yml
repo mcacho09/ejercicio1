@@ -38,6 +38,7 @@ jobs:
         run: terraform plan -detailed-exitcode -no-color || echo $? > exitcode.txt
 
       - name: Set output
+        working-directory: infra/terraform
         run: |
           code=$(cat exitcode.txt)
           if [ "$code" -eq 2 ]; then
