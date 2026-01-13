@@ -33,6 +33,7 @@ jobs:
         run: terraform init -upgrade
 
       - name: Terraform Plan
+        working-directory: infra/terraform
         id: plan
         run: terraform plan -detailed-exitcode -no-color || echo $? > exitcode.txt
 
@@ -46,6 +47,7 @@ jobs:
           fi
 
       - name: Apply if plan has changes
+        working-directory: infra/terraform
         if: steps.plan.outputs.changed == 'true'
         run: terraform apply -auto-approve
 
