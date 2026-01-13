@@ -35,22 +35,21 @@ jobs:
       - name: Terraform Plan
         working-directory: infra/terraform
         id: plan
-        run: terraform plan -detailed-exitcode -no-color || echo $? > exitcode.txt
+        run: terraform plan -no-color -out=tfplan > plan.txt
 
-      - name: Set output
-        working-directory: infra/terraform
+      - name: Check if plan has changes
+        id: changes
         run: |
-          code=$(cat exitcode.txt)
-          if [ "$code" -eq 2 ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
+          terraform show -no-color tfplan > plan.out
+          if grep -q "No changes. Infrastructure is up-to-date." plan.out; then
             echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Apply if plan has changes
-        working-directory: infra/terraform
-        if: steps.plan.outputs.changed == 'true'
-        run: terraform apply -auto-approve
+      - name: Apply only if changes
+        if: steps.changes.outputs.changed == 'true'
+        run: terraform apply tfplan -auto-approve
 
   build-and-deploy:
     runs-on: ubuntu-latest
