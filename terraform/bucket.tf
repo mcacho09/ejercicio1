@@ -34,3 +34,13 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "secure_bucket_enc
     }
   }
 }
+
+resource "aws_s3_access_point" "example" {
+  name   = "my-access-point"
+  bucket = aws_s3_bucket.secure_bucket.id
+
+  vpc_configuration {
+    vpc_id = "vpc-5f16ba22"
+  }
+}
+
