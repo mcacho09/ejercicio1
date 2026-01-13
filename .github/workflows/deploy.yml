@@ -10,9 +10,12 @@ env:
 jobs:
   terraform-init:
     runs-on: ubuntu-latest
+    env:
+      REGION: ${{ vars.AWS_REGION }}
 
     steps:
       - name: Checkout repo
+        run: echo "The value is ${{ env.REGION }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }} # ensures you get the PR branch
@@ -27,7 +30,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ env.REGION }}
 
       - name: Verify files in dir
         working-directory: infra/terraform
