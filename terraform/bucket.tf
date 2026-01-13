@@ -4,10 +4,6 @@ resource "aws_s3_bucket" "secure_bucket" {
   tags = var.tags
 }
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.secure_bucket.id
-  acl    = "private"
-}
 
 # Block public access
 resource "aws_s3_bucket_public_access_block" "secure_bucket_block" {
