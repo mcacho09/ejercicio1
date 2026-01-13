@@ -51,7 +51,7 @@ jobs:
       - name: Apply only if changes
         working-directory: infra/terraform
         if: steps.changes.outputs.changed == 'true'
-        run: terraform apply tfplan -auto-approve
+        run: terraform apply -auto-approve tfplan
 
   build-and-deploy:
     runs-on: ubuntu-latest
