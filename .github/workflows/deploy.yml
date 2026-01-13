@@ -15,7 +15,6 @@ jobs:
 
     steps:
       - name: Checkout repo
-        run: echo "The value is ${{ env.REGION }}"
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }} # ensures you get the PR branch
